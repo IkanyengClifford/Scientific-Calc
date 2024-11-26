@@ -13,10 +13,7 @@ function clearDisplay(): void {
     }
 }
 
-/**
- * Perform a specific operation on the current value in the display.
- * @param operation - The operation to perform (e.g., 'sqrt', 'pow').
- */
+
 function operate(operation: string): void {
     if (display) {
         const current = parseFloat(display.value);
@@ -26,12 +23,20 @@ function operate(operation: string): void {
             return;
         }
 
+        const radians = current * (Math.PI / 180);
+
         switch (operation) {
             case "sqrt":
-                display.value = Math.sqrt(current).toFixed(6);
+                display.value = Math.sqrt(current).toString;
                 break;
             case "pow":
                 display.value = Math.pow(current, 2).toFixed(6);
+                break;
+                case "cos":
+                display.value = Math.cos(current).toFixed(6); 
+                break;
+            case "sin":
+                display.value = Math.sin(current).toFixed(6); 
                 break;
             default:
                 display.value = "Error";
@@ -39,9 +44,7 @@ function operate(operation: string): void {
     }
 }
 
-/**
- * Calculate the result of the expression in the display.
- */
+
 function calculate(): void {
     if (display) {
         try {
@@ -49,7 +52,7 @@ function calculate(): void {
             const sanitizedExpression = expression.replace(/[^-()\d/*+.]/g, "");
             const result = new Function(`"use strict"; return (${sanitizedExpression})`)();
             if (typeof result === "number" && isFinite(result)) {
-                display.value = result.toFixed(6);
+                display.value = result.toFixed(0);
             } else {
                 display.value = "Error";
             }
